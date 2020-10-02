@@ -32,11 +32,23 @@ class Grid {
         });
     }
 
+    nextGeneration = () => {
+        let newGrid = this.cells.map((row, curRow) => {
+            return row.map((cell, curCell) => {
+                let coord = {row: curRow, col: curCell}
+                if(curRow === 2 && curCell === 2) {
+                }
+                return this.liveOrDie(coord);
+            });
+        });
+
+        this.cells = newGrid;
+    }
+
     liveOrDie = (coordinate) => {
         let newCell = new Cell(false);
-
         newCell.alive = Rules.survivesThisGeneration(this.cellAt(coordinate), this.findNeighbors(coordinate));
-
+        
         return newCell;
     }
 

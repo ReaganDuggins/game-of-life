@@ -194,4 +194,94 @@ describe('Grid', () => {
             });
         });
     });
+
+    describe('nextGeneration()', () => {
+
+        beforeEach(() => {
+            grid = new Grid(5);
+        });
+
+        describe('empty grid', () => {
+            it('should stay empty', () => {
+                grid.nextGeneration();
+
+                grid.cells.forEach((row, curRow) => {
+                    row.forEach((cell, curCell) => {
+                        cell.alive.should.equal(false, "Row: " + curRow + ", Cell: " + curCell);
+                    });
+                });
+            });
+        });
+
+        describe('a cell has no neighbors', () => {
+            it('should die', () => {
+                grid.cellAt({row: 2, col: 2}).alive = true;
+
+                grid.nextGeneration();
+
+                grid.isAlive({row: 2, col: 2}).should.be.false;
+            });
+        });
+
+        describe('a cell has 1 neighbor', () => {
+            it('should die', () => {
+                grid.cellAt({row: 2, col: 2}).alive = true;
+                grid.cellAt({row: 2, col: 3}).alive = true;
+
+                grid.nextGeneration();
+
+                grid.isAlive({row: 2, col: 2}).should.be.false;
+            });
+        });
+
+        describe('a cell has 2 neighbors', () => {
+            it('should stay alive', () => {
+                grid.cellAt({row: 2, col: 2}).alive = true;
+                grid.cellAt({row: 1, col: 3}).alive = true;
+                grid.cellAt({row: 3, col: 2}).alive = true;
+
+                grid.nextGeneration();
+
+                grid.isAlive({row: 2, col: 2}).should.be.true;
+            });
+        });
+
+        describe('a cell has 3 neighbors', () => {
+            it('should stay alive', () => {
+                grid.cellAt({row: 2, col: 2}).alive = true;
+                grid.cellAt({row: 1, col: 3}).alive = true;
+                grid.cellAt({row: 3, col: 2}).alive = true;
+                grid.cellAt({row: 2, col: 1}).alive = true;
+
+                grid.nextGeneration();
+
+                grid.isAlive({row: 2, col: 2}).should.be.true;
+            });
+
+            it('should resurrect', () => {
+                // grid.cellAt({row: 2, col: 2}).alive = true;
+                grid.cellAt({row: 1, col: 3}).alive = true;
+                grid.cellAt({row: 3, col: 2}).alive = true;
+                grid.cellAt({row: 2, col: 1}).alive = true;
+
+                grid.nextGeneration();
+
+                grid.isAlive({row: 2, col: 2}).should.be.true;
+            });
+        });
+
+        describe('a cell has too many neighbors', () => {
+            it('should die', () => {
+                grid.cellAt({row: 2, col: 2}).alive = true;
+                grid.cellAt({row: 1, col: 3}).alive = true;
+                grid.cellAt({row: 3, col: 2}).alive = true;
+                grid.cellAt({row: 1, col: 2}).alive = true;
+                grid.cellAt({row: 3, col: 1}).alive = true;
+
+                grid.nextGeneration();
+
+                grid.isAlive({row: 2, col: 2}).should.be.false;
+            });
+        });
+    });
 });
