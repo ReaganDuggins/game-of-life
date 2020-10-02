@@ -10,8 +10,10 @@ describe('Cell', () => {
 
         it('should take living state in the constructor', () => {
             cell = new Cell(true);
-
             cell.alive.should.equal(true);
+
+            cell = new Cell(false);
+            cell.alive.should.equal(false);
         });
     });
 });
