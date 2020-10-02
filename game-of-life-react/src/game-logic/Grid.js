@@ -43,6 +43,7 @@ class Grid {
         });
 
         this.cells = newGrid;
+        return this.cells;
     }
 
     liveOrDie = (coordinate) => {
@@ -87,6 +88,28 @@ class Grid {
 
     isInGrid = (coordinate) => {
         return this.cells[coordinate.row] && this.cells[coordinate.row][coordinate.col]
+    }
+
+    completelyDead = () => {
+        for(let row = 0; row < this.size; row++) {
+            for(let col = 0; col < this.size; col++) {
+                if(this.cells[row][col].alive) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    toString = () => {
+        return this.cells.map((curRow) => {
+            return "|" + curRow.map((curCell) => {
+                if(curCell.alive) {
+                    return "*";
+                }
+                return " ";
+            }) + "|\n";
+        }).join('');
     }
 }
 
