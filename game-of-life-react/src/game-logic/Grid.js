@@ -1,4 +1,5 @@
 const Cell = require("./Cell");
+const Rules = require("./Rules");
 
 class Grid {
     constructor(size, livingCells) {
@@ -31,6 +32,14 @@ class Grid {
         });
     }
 
+    liveOrDie = (coordinate) => {
+        let newCell = new Cell(false);
+
+        newCell.alive = Rules.survivesThisGeneration(this.cellAt(coordinate), this.findNeighbors(coordinate));
+
+        return newCell;
+    }
+
     findNeighbors = (coordinate) => {
         let neighbors = [];
         for(let curRow = coordinate.row - 1; curRow <= coordinate.row + 1; curRow++) {
@@ -40,7 +49,6 @@ class Grid {
                 }
 
                 let curCoord = {row: curRow, col: curCol};
-                console.log(curCoord);
                 if(this.isInGrid(curCoord)) {
                     neighbors.push(this.cellAt(curCoord))
                 }

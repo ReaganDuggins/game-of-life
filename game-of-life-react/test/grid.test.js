@@ -115,9 +115,83 @@ describe('Grid', () => {
         });
     });
 
-    describe('nextGeneration()', () => {
-        describe('when ', () =>{
+    describe('liveOrDie()', () => {
 
-        })
+        beforeEach(() => {
+            grid = new Grid(5,[
+                {row: 0, col: 3},
+                {row: 0, col: 4},
+                {row: 1, col: 0},
+                {row: 1, col: 1},
+                {row: 1, col: 3},
+                {row: 1, col: 4},
+                {row: 2, col: 0},
+                {row: 2, col: 4},
+                {row: 4, col: 0},
+                {row: 4, col: 2},
+                {row: 4, col: 3},
+
+            ]);
+        });
+
+        describe('when a live cell is underpopulated', () =>{
+            it('should die', () => {
+                let cellCoord = {row: 4, col: 0};
+                let newCell = grid.liveOrDie(cellCoord);
+
+                newCell.alive.should.equal(false);
+
+                cellCoord = {row: 4, col: 2};
+                newCell = grid.liveOrDie(cellCoord);
+
+                newCell.alive.should.equal(false);
+            });
+        });
+
+        describe('when a live cell is overpopulated', () =>{
+            it('should die', () => {
+                let cellCoord = {row: 1, col: 3};
+                let newCell = grid.liveOrDie(cellCoord);
+
+                newCell.alive.should.equal(false);
+
+                cellCoord = {row: 1, col: 4};
+                newCell = grid.liveOrDie(cellCoord);
+
+                newCell.alive.should.equal(false);
+            });
+        });
+
+        describe('when a cell is perfectly populated', () =>{
+            it('should live if dead', () => {
+                let deadCoord = {row: 2, col: 1};
+                let newCell = grid.liveOrDie(deadCoord);
+
+                newCell.alive.should.equal(true);
+            });
+
+            it('should live if alive', () => {
+                let liveCoord = {row: 1, col: 2};
+                let newCell = grid.liveOrDie(liveCoord);
+
+                newCell.alive.should.equal(true);
+            });
+        });
+
+        describe('when a cell is barely populated', () =>{
+            it('should live if alive', () => {
+                let deadCoord = {row: 1, col: 0};
+                let newCell = grid.liveOrDie(deadCoord);
+
+                newCell.alive.should.equal(true);
+            });
+
+            it('should die if dead', () => {
+                let liveCoord = {row: 4, col: 1};
+                let newCell = grid.liveOrDie(liveCoord);
+
+                newCell.alive.should.equal(false);
+            });
+        });
     });
 });
