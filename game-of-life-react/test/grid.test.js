@@ -84,6 +84,40 @@ describe('Grid', () => {
             });
         });
     });
+    
+    describe('findNeighbors()', () => {
+        describe('should gather all of the neighbors when', () => {
+            it('has no neighbors', () => {
+                grid = new Grid(1);
+                let found = grid.findNeighbors({row: 0, col: 0});
+                found.length.should.equal(0);
+            });
 
+            it('has some neighbors', () => {
+                grid = new Grid(2);
+                let found = grid.findNeighbors({row: 0, col: 0});
+                found.length.should.equal(3);
 
+                grid = new Grid(2);
+                found = grid.findNeighbors({row: 1, col: 1});
+                found.length.should.equal(3);
+
+                grid = new Grid(3);
+                found = grid.findNeighbors({row: 0, col: 1});
+                found.length.should.equal(5);
+            });
+
+            it('has all neighbors', () => {
+                grid = new Grid(3);
+                let found = grid.findNeighbors({row: 1, col: 1});
+                found.length.should.equal(8);
+            });
+        });
+    });
+
+    describe('nextGeneration()', () => {
+        describe('when ', () =>{
+
+        })
+    });
 });

@@ -31,6 +31,25 @@ class Grid {
         });
     }
 
+    findNeighbors = (coordinate) => {
+        let neighbors = [];
+        for(let curRow = coordinate.row - 1; curRow <= coordinate.row + 1; curRow++) {
+            for(let curCol = coordinate.col - 1; curCol <= coordinate.col + 1; curCol++) {
+                if(curCol === coordinate.col && curRow == coordinate.row) {
+                    continue;
+                }
+
+                let curCoord = {row: curRow, col: curCol};
+                console.log(curCoord);
+                if(this.isInGrid(curCoord)) {
+                    neighbors.push(this.cellAt(curCoord))
+                }
+            }
+        }
+
+        return neighbors;
+    }
+
     isAlive = (coordinate) => {
         let cell = this.cellAt(coordinate);
         if(!cell) {
