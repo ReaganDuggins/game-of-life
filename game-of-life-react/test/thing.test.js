@@ -1,4 +1,7 @@
 let chai = require('chai');
+chai.should();
+
+let Cell = require('../src/game-logic/Cell');
 
 describe('Cell', () => {
     let cell;
