@@ -50,8 +50,8 @@ describe('Grid', () => {
                         row.forEach((cell) => {
                             should.exist(cell);
                             cell.alive.should.equal(false);
-                        })
-                    })
+                        });
+                    });
                 });
             });
 
@@ -66,17 +66,19 @@ describe('Grid', () => {
                     grid.cells[2][4].alive.should.equal(true);
                 });
 
-                xdescribe('but the list contains bad coordinates', () => {
+                describe('but the list contains bad coordinates', () => {
                     it('should ignore the bad coordinates', () => {
                         grid = new Grid(5, [
                             {row: 10, col: 4}, 
                             {row: 0, col: -12},
                         ]);
-    
-                        grid.cells.length.should.equal(5);
-                        grid.cells[0].length.should.equal(5);
-                        
-                        grid.cells[2][4].alive.should.equal(true);
+
+                        grid.cells.forEach((row) => {
+                            row.forEach((cell) => {
+                                should.exist(cell);
+                                cell.alive.should.equal(false);
+                            });
+                        });
                     });
                 })
             });

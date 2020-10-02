@@ -20,7 +20,9 @@ class Grid {
         
         if(livingCells){    
             livingCells.forEach((coordinate) => {
-                this.cells[coordinate.row][coordinate.col].alive = true;
+                if(this.cells[coordinate.row] && this.cells[coordinate.row][coordinate.col]){
+                    this.cells[coordinate.row][coordinate.col].alive = true;
+                }
             });
         }
     }
