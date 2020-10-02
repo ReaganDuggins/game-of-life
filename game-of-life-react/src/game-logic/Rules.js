@@ -2,19 +2,15 @@ class Rules {
     static survivesThisGeneration(cell, neighbors) {
         let livingNeighbors = this.countLiving(neighbors);
 
-        if(this.isUnderpopulated(livingNeighbors)) {
-            return false;
-        }
-
-        if(this.isOverpopulated(livingNeighbors)) {
-            return false;
-        }
-
         if(this.isEquilibrious(livingNeighbors)) {
             return cell.alive;
         }
 
-        return true;
+        if(this.isVivacious(livingNeighbors)) {
+            return true;
+        }
+
+        return false;
 
     }
 
@@ -28,6 +24,10 @@ class Rules {
 
     static isEquilibrious(livingNeighbors) {
         return livingNeighbors === 2;
+    }
+
+    static isVivacious(livingNeighbors) {
+        return livingNeighbors === 3;
     }
 
     static countLiving(neighbors) {
