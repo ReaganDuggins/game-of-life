@@ -49,3 +49,21 @@
   background-color: black;
   border: 1px solid darkSlateGrey;
 }
+
+#start-stop-button {
+  margin-left: 25vw;
+  border-radius: 5px;
+  height: 5vh;
+  width: 15vw;
+}
+
+#size-input-holder {
+  margin-left: 2vw;
+}
+
+#size-input {
+  margin-left: 1vw;
+  border-radius: 5px;
+  height: 5vh;
+  width: 24vw;
+}

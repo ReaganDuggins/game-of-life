@@ -129,8 +129,11 @@ export default class GameOfLife extends Component {
         return (
             <section className="grid-holder-ultimate">
                 {this.showGrid()}
-                <button onClick={this.startStopGenerations}>{this.state.startStopText}</button>
-                <input type="number" min="2" max="41" onChange={this.sizeChange} value={this.state.gridSize}></input>
+                <button id="start-stop-button" onClick={this.startStopGenerations}>{this.state.startStopText}</button>
+                <span id="size-input-holder">
+                    <lable htmlFor={'size-input'}>Grid Size</lable>
+                    <input id="size-input" type="number" min="2" max="41" onChange={this.sizeChange} value={this.state.gridSize}></input>
+                </span>
             </section>
         );
     }
