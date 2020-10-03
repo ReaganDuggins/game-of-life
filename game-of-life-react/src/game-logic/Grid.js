@@ -111,6 +111,14 @@ class Grid {
             }) + "|\n";
         }).join('');
     }
+
+    cloneCells = () => {
+        return this.cells.map((row) => {
+            return row.map((col) => {
+                return col;
+            });
+        });
+    }
 }
 
 module.exports = Grid;

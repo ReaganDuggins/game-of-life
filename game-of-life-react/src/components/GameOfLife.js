@@ -4,41 +4,45 @@ import Grid from '../game-logic/Grid';
 export default class GameOfLife extends Component {
     constructor(props) {
         super(props);
+
+        let initialGrid = new Grid(10, [
+            {
+                row: 5,
+                col: 5
+            },
+            {
+                row: 5,
+                col: 6
+            },
+            {
+                row: 5,
+                col: 7
+            },
+            {
+                row: 6,
+                col: 5
+            },
+            {
+                row: 6,
+                col: 6
+            },
+            {
+                row: 6,
+                col: 7
+            },
+            {
+                row: 6,
+                col: 8
+            },
+        ]);
+
         this.state = {
             alreadyGoing: false,
             startStopText: 'Start',
             gridSize: 10,
             speed: 1,
-            grid: new Grid(10, [
-                {
-                    row: 5,
-                    col: 5
-                },
-                {
-                    row: 5,
-                    col: 6
-                },
-                {
-                    row: 5,
-                    col: 7
-                },
-                {
-                    row: 6,
-                    col: 5
-                },
-                {
-                    row: 6,
-                    col: 6
-                },
-                {
-                    row: 6,
-                    col: 7
-                },
-                {
-                    row: 6,
-                    col: 8
-                },
-            ]),
+            previousGrid: null,
+            grid: initialGrid,
             speedOptions: [
                 1000,
                 500,
@@ -117,8 +121,17 @@ export default class GameOfLife extends Component {
         let newStartStopText = '';
         if(stillGoing) {
             newStartStopText = 'Stop';
+            
+            this.setState({
+                previousGrid: this.state.grid.cloneCells()
+            });
         }else {
             newStartStopText = 'Start';
+            let newGrid = this.state.grid;
+            newGrid.cells = this.state.previousGrid;
+            this.setState({
+                grid: newGrid
+            });
         }
         this.setState({
             alreadyGoing: stillGoing,
@@ -174,13 +187,14 @@ export default class GameOfLife extends Component {
                 {this.showGrid()}
                 <button id="start-stop-button" onClick={this.startStopGenerations}>{this.state.startStopText}</button>
                 <span id="size-input-holder">
-                    <lable htmlFor={'size-input'}>Grid Size</lable>
+                    <label htmlFor={'size-input'}>Grid Size</label>
                     <input id="size-input" type="number" min="2" max="41" onChange={this.sizeChange} value={this.state.gridSize}></input>
                 </span>
                 <span id="size-input-holder">
-                    <lable htmlFor={'speed-input'}>Generation Speed</lable>
+                    <label htmlFor={'speed-input'}>Generation Speed</label>
                     <input id="speed-input" type="number" min="0" max="6" onChange={this.speedChange} value={this.state.speed}></input>
                 </span>
+                
             </section>
         );
     }
