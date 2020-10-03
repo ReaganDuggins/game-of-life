@@ -93,7 +93,7 @@ class Grid {
     completelyDead = () => {
         for(let row = 0; row < this.size; row++) {
             for(let col = 0; col < this.size; col++) {
-                if(this.cells[row][col].alive) {
+                if(this.cells[row][col] && this.cells[row][col].alive) {
                     return false;
                 }
             }
