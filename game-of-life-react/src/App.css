@@ -55,6 +55,7 @@
   border-radius: 5px;
   height: 5vh;
   width: 13vw;
+  background-color: rgb(88, 88, 255);
 }
 
 #size-input-holder {
@@ -73,4 +74,12 @@
   border-radius: 5px;
   height: 5vh;
   width: 5vw;
+}
+
+#clear-button {
+  margin-left: 40vw;
+  width: 20vw;
+  height: 5vh;
+  border-radius: 5px;
+  background-color: rgb(148, 19, 19);
 }

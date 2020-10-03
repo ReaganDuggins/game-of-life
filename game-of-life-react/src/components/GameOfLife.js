@@ -166,6 +166,9 @@ export default class GameOfLife extends Component {
         clearInterval(this.interval);
 
         this.interval = setInterval(() => {
+            if(this.state.grid.completelyDead()) {
+                this.startStopGenerations();
+            }
             if(this.state.alreadyGoing) {
                 let newCells = this.state.grid.nextGeneration();
                 let newGrid = this.state.grid;
