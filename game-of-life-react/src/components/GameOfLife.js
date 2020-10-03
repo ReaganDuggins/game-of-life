@@ -7,6 +7,7 @@ export default class GameOfLife extends Component {
         this.state = {
             alreadyGoing: false,
             startStopText: 'Start',
+            gridSize: 10,
             grid: new Grid(10, [
                 {
                     row: 5,
@@ -115,11 +116,21 @@ export default class GameOfLife extends Component {
         });
     }
 
+    sizeChange = (event) => {
+        let newSize = event.target.value;
+        let newGrid = new Grid(newSize, []);
+        this.setState({
+            grid: newGrid,
+            gridSize: newSize
+        });
+    }
+
     render() {
         return (
             <section className="grid-holder-ultimate">
                 {this.showGrid()}
                 <button onClick={this.startStopGenerations}>{this.state.startStopText}</button>
+                <input type="number" min="2" max="41" onChange={this.sizeChange} value={this.state.gridSize}></input>
             </section>
         );
     }
