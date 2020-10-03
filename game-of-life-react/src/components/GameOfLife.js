@@ -43,6 +43,7 @@ export default class GameOfLife extends Component {
             speed: 1,
             previousGrid: null,
             grid: initialGrid,
+            mousePressed: false,
             speedOptions: [
                 1000,
                 500,
@@ -72,6 +73,18 @@ export default class GameOfLife extends Component {
         clearInterval(this.interval);
     }
 
+    mouseDown = () => {
+        this.setState({
+            mousePressed: true
+        });
+    }
+
+    mouseUp = () => {
+        this.setState({
+            mousePressed: false
+        });
+    }
+
     showGrid = () => {
         return <table className="grid-holder">
             <tbody className="grid">
@@ -91,7 +104,7 @@ export default class GameOfLife extends Component {
     showRow = (row, rowNum) => {
         return row.map((curCell, colNum) => {
             return (
-                <td className={this.cellType(curCell)} onClick={() => {this.clickCell(rowNum, colNum)}}>
+                <td className={this.cellType(curCell)} onClick={() => {this.clickCell(rowNum, colNum)}} onMouseEnter={() => {this.maybeToggleCell(rowNum, colNum)}}>
                 </td>
             )
         });
@@ -106,6 +119,22 @@ export default class GameOfLife extends Component {
 
     clickCell = (rowNum, colNum) => {
         if(this.state.alreadyGoing) {
+            return;
+        }
+
+        let newGrid = this.state.grid;
+        newGrid.cells[rowNum][colNum].alive = !newGrid.cells[rowNum][colNum].alive;
+        this.setState({
+            grid: newGrid
+        });
+    }
+
+    maybeToggleCell = (rowNum, colNum) => {
+        if(this.state.alreadyGoing) {
+            return;
+        }
+
+        if(!this.state.mousePressed) {
             return;
         }
 
@@ -193,7 +222,7 @@ export default class GameOfLife extends Component {
 
     render() {
         return (
-            <section className="grid-holder-ultimate">
+            <section className="grid-holder-ultimate" onMouseDown={this.mouseDown} onMouseUp={this.mouseUp}>
                 {this.showGrid()}
                 <button id="start-stop-button" onClick={this.startStopGenerations}>{this.state.startStopText}</button>
                 <span id="size-input-holder">
