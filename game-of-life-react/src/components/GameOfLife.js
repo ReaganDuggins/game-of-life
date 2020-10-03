@@ -181,6 +181,13 @@ export default class GameOfLife extends Component {
         });
     }
 
+    clearCells = () => {
+        let newGrid = new Grid(this.state.gridSize);
+        this.setState({
+            grid: newGrid
+        });
+    }
+
     render() {
         return (
             <section className="grid-holder-ultimate">
@@ -194,6 +201,9 @@ export default class GameOfLife extends Component {
                     <label htmlFor={'speed-input'}>Generation Speed</label>
                     <input id="speed-input" type="number" min="0" max="6" onChange={this.speedChange} value={this.state.speed}></input>
                 </span>
+                <section>
+                    <button id="clear-button" onClick={this.clearCells}>Clear</button>
+                </section>
                 
             </section>
         );
