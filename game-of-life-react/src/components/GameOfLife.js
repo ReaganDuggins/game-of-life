@@ -53,8 +53,6 @@ export default class GameOfLife extends Component {
 
     componentDidMount() {
         this.interval = setInterval(() => {
-            console.log("GOOP")
-
             if(this.state.alreadyGoing) {
                 let newCells = this.state.grid.nextGeneration();
                 let newGrid = this.state.grid;
@@ -63,7 +61,7 @@ export default class GameOfLife extends Component {
                     grid: newGrid
                 });
             }
-        }, (500 * this.state.speed));
+        }, (this.state.speedOptions[1]));
     }
 
     componentWillUnmount() {
@@ -151,7 +149,6 @@ export default class GameOfLife extends Component {
 
     speedChange = (event) => {
         let newSpeed = event.target.value;
-        console.log(newSpeed);
 
         clearInterval(this.interval);
 
