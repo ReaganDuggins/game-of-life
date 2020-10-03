@@ -8,6 +8,7 @@ export default class GameOfLife extends Component {
             alreadyGoing: false,
             startStopText: 'Start',
             gridSize: 10,
+            speed: 1,
             grid: new Grid(10, [
                 {
                     row: 5,
@@ -37,12 +38,23 @@ export default class GameOfLife extends Component {
                     row: 6,
                     col: 8
                 },
-            ])
+            ]),
+            speedOptions: [
+                1000,
+                500,
+                250,
+                200,
+                150,
+                100,
+                50
+            ]
         }
     }
 
     componentDidMount() {
         this.interval = setInterval(() => {
+            console.log("GOOP")
+
             if(this.state.alreadyGoing) {
                 let newCells = this.state.grid.nextGeneration();
                 let newGrid = this.state.grid;
@@ -51,7 +63,7 @@ export default class GameOfLife extends Component {
                     grid: newGrid
                 });
             }
-        }, 500);
+        }, (500 * this.state.speed));
     }
 
     componentWillUnmount() {
@@ -118,10 +130,44 @@ export default class GameOfLife extends Component {
 
     sizeChange = (event) => {
         let newSize = event.target.value;
-        let newGrid = new Grid(newSize, []);
+        let oldGrid = this.state.grid.cells;
+        let living = [];
+
+        oldGrid.forEach((curRow, rowNum) => {
+            curRow.forEach((curCol, colNum) => {
+                if(oldGrid[rowNum][colNum].alive) {
+                    living.push({row: rowNum, col: colNum});
+                }
+            });
+        });
+
+        let newGrid = new Grid(newSize, living);
+
         this.setState({
             grid: newGrid,
             gridSize: newSize
+        });
+    }
+
+    speedChange = (event) => {
+        let newSpeed = event.target.value;
+        console.log(newSpeed);
+
+        clearInterval(this.interval);
+
+        this.interval = setInterval(() => {
+            if(this.state.alreadyGoing) {
+                let newCells = this.state.grid.nextGeneration();
+                let newGrid = this.state.grid;
+                newGrid.cells = newCells;
+                this.setState({
+                    grid: newGrid
+                });
+            }
+        }, (this.state.speedOptions[newSpeed]));
+
+        this.setState({
+            speed: newSpeed
         });
     }
 
@@ -133,6 +179,10 @@ export default class GameOfLife extends Component {
                 <span id="size-input-holder">
                     <lable htmlFor={'size-input'}>Grid Size</lable>
                     <input id="size-input" type="number" min="2" max="41" onChange={this.sizeChange} value={this.state.gridSize}></input>
+                </span>
+                <span id="size-input-holder">
+                    <lable htmlFor={'speed-input'}>Generation Speed</lable>
+                    <input id="speed-input" type="number" min="0" max="6" onChange={this.speedChange} value={this.state.speed}></input>
                 </span>
             </section>
         );

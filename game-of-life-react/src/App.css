@@ -51,10 +51,10 @@
 }
 
 #start-stop-button {
-  margin-left: 25vw;
+  margin-left: 20vw;
   border-radius: 5px;
   height: 5vh;
-  width: 15vw;
+  width: 13vw;
 }
 
 #size-input-holder {
@@ -65,5 +65,12 @@
   margin-left: 1vw;
   border-radius: 5px;
   height: 5vh;
-  width: 24vw;
+  width: 5vw;
+}
+
+#speed-input {
+  margin-left: 1vw;
+  border-radius: 5px;
+  height: 5vh;
+  width: 5vw;
 }
